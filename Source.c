@@ -30,10 +30,10 @@ char mas[height][width+1]; // Field array
 int HitCnt = 0;
 int MaxHitCnt = 0;
 
-SRacket racket;            // ðàêåòêà ïî ñòðóêòóðå
-SBall ball;
+SRacket racket;            // Making a racket
+SBall ball;           	   // Ball creation
 
-//äâèæåíèå øàðà
+//ball movement
 void MoveBall(float x, float y) {
 	ball.x = x;
 	ball.y = y;
@@ -42,7 +42,7 @@ void MoveBall(float x, float y) {
 }
 
 
-//èíèöèàëèçàöèÿ øàðà
+//ball initialization
 void InitBall() {
 	MoveBall(2, 2);
 	ball.alfa = -1;
@@ -50,10 +50,12 @@ void InitBall() {
 }
 
 
-// ïîìåùåíèå øàðà â ìàññèâ 
+// placing a ball in an array
 void PutBall() {
 	mas[ball.iy][ball.ix] = '*';
 }
+
+
 // "game"
 void AutoMoveBall() {
 	if (ball.alfa < 0) ball.alfa += M_PI * 2;
@@ -83,19 +85,25 @@ void AutoMoveBall() {
 		AutoMoveBall();
 	}
 }
-//èíèöèàëèçàöèÿ ðàêåòêè
+
+
+//racket initialization
 void InitRacket(){
 	racket.w = 7;
 	racket.x = (width - racket.w) / 2;
 	racket.y = height-1;
 }
-// ïîìåùåíèå ðàêåòêè â ìàññèâ
+
+
+// placing a racket in an array
 void PutRacket(){
 	for (int i = racket.x; i < racket.x + racket.w; i++) {
 		mas[racket.y][i] = '@';
 	}
 }
-// äâèæåíèå ðàêåòêè
+
+
+// racket movement
 void MoveRacket(int x) {
 	racket.x = x;
 	if (racket.x < 1) {
@@ -105,7 +113,9 @@ void MoveRacket(int x) {
 		racket.x = width - racket.w - 1;
 	}
 }
-// èíèöèàëèçàöèÿ ïîëÿ
+
+
+// field initialization
 void InitField() {
 	
 	for (int i = 0; i < width; i++) {
@@ -120,7 +130,9 @@ void InitField() {
 		strncpy(mas[i], mas[1], width+1);
 	}
 }
-// âûâîä ïîëÿ
+
+
+// display field
 void ShowField() {
 	for (int i = 0; i < height; i++) {
 		printf("%s", mas[i]);
@@ -132,7 +144,9 @@ void ShowField() {
 		
 	}
 }
-//î÷èñòêà êîíñîëè
+
+
+//a carriage return
 void setcur(int x, int y) {
 	COORD coord;
 	coord.X = x;
@@ -140,7 +154,7 @@ void setcur(int x, int y) {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE) , coord);
 }
 int main() {
-	// ïðÿ÷åì êóðñîð êîíñîëè
+	// hide console cursor
 	HANDLE  handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO structCursorInfo;
 	GetConsoleCursorInfo(handle, &structCursorInfo);
