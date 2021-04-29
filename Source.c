@@ -7,15 +7,18 @@
 #include <time.h>
 #include <string.h>
 #include <windows.h>
-#define width 65 // константа ширины  -
-#define height 25 // константа длины |
 
-// структура ракетки
+#define width 65  // width  -
+#define height 25 // height |
+
+// Rocket struct
 typedef struct {
 	int x, y;
 	int w;
 }SRacket;
-// структура шара
+
+
+// Ball struct
 typedef struct {
 	float x, y;
 	int ix, iy;
@@ -23,26 +26,31 @@ typedef struct {
 	float speed;
 }SBall;
 
-char mas[height][width+1]; // массив поля
+char mas[height][width+1]; // Field array
 int HitCnt = 0;
 int MaxHitCnt = 0;
 
-SRacket racket;            // ракетка по структуре
+SRacket racket;            // Г°Г ГЄГҐГІГЄГ  ГЇГ® Г±ГІГ°ГіГЄГІГіГ°ГҐ
 SBall ball;
-//движение шара
+
+//Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГёГ Г°Г 
 void MoveBall(float x, float y) {
 	ball.x = x;
 	ball.y = y;
 	ball.iy = (int)round(ball.y);
 	ball.ix = (int)round(ball.x);
 }
-//инициализация шара
+
+
+//ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§Г Г¶ГЁГї ГёГ Г°Г 
 void InitBall() {
 	MoveBall(2, 2);
 	ball.alfa = -1;
 	ball.speed = 0.5;
 }
-// помещение шара в массив 
+
+
+// ГЇГ®Г¬ГҐГ№ГҐГ­ГЁГҐ ГёГ Г°Г  Гў Г¬Г Г±Г±ГЁГў 
 void PutBall() {
 	mas[ball.iy][ball.ix] = '*';
 }
@@ -75,19 +83,19 @@ void AutoMoveBall() {
 		AutoMoveBall();
 	}
 }
-//инициализация ракетки
+//ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§Г Г¶ГЁГї Г°Г ГЄГҐГІГЄГЁ
 void InitRacket(){
 	racket.w = 7;
 	racket.x = (width - racket.w) / 2;
 	racket.y = height-1;
 }
-// помещение ракетки в массив
+// ГЇГ®Г¬ГҐГ№ГҐГ­ГЁГҐ Г°Г ГЄГҐГІГЄГЁ Гў Г¬Г Г±Г±ГЁГў
 void PutRacket(){
 	for (int i = racket.x; i < racket.x + racket.w; i++) {
 		mas[racket.y][i] = '@';
 	}
 }
-// движение ракетки
+// Г¤ГўГЁГ¦ГҐГ­ГЁГҐ Г°Г ГЄГҐГІГЄГЁ
 void MoveRacket(int x) {
 	racket.x = x;
 	if (racket.x < 1) {
@@ -97,7 +105,7 @@ void MoveRacket(int x) {
 		racket.x = width - racket.w - 1;
 	}
 }
-// инициализация поля
+// ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§Г Г¶ГЁГї ГЇГ®Г«Гї
 void InitField() {
 	
 	for (int i = 0; i < width; i++) {
@@ -112,7 +120,7 @@ void InitField() {
 		strncpy(mas[i], mas[1], width+1);
 	}
 }
-// вывод поля
+// ГўГ»ГўГ®Г¤ ГЇГ®Г«Гї
 void ShowField() {
 	for (int i = 0; i < height; i++) {
 		printf("%s", mas[i]);
@@ -124,7 +132,7 @@ void ShowField() {
 		
 	}
 }
-//очистка консоли
+//Г®Г·ГЁГ±ГІГЄГ  ГЄГ®Г­Г±Г®Г«ГЁ
 void setcur(int x, int y) {
 	COORD coord;
 	coord.X = x;
@@ -132,7 +140,7 @@ void setcur(int x, int y) {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE) , coord);
 }
 int main() {
-	// прячем курсор консоли
+	// ГЇГ°ГїГ·ГҐГ¬ ГЄГіГ°Г±Г®Г° ГЄГ®Г­Г±Г®Г«ГЁ
 	HANDLE  handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO structCursorInfo;
 	GetConsoleCursorInfo(handle, &structCursorInfo);
